@@ -1,0 +1,24 @@
+import urllib.request
+from PIL import Image, ImageDraw, ImageFont
+
+# Wklej tutaj swój prywatny link ICS z Google Calendar
+ICS_URL = "https://calendar.google.com/calendar/ical/anna.gajdziszewska%40gmail.com/public/basic.ics"
+
+def main():
+    # Pobieranie danych z Google
+    req = urllib.request.urlopen(ICS_URL)
+    ics_data = req.read().decode('utf-8')
+    
+    # Tworzenie czystego obrazu pod rozdzielczość Kindle Paperwhite (1072x1448)
+    img = Image.new('1', (1072, 1448), 255) # 1 = biało-czarny, 255 = białe tło
+    draw = ImageDraw.Draw(img)
+    
+    # Prosty napis informacyjny (w przyszłości można rozbudować o parsowanie wydarzeń)
+    draw.text((50, 50), "Mój Kalendarz Google", fill=0)
+    draw.text((50, 100), "Aktualizacja z GitHub Actions", fill=0)
+    
+    # Zapisanie gotowego pliku PNG
+    img.save("calendar.png")
+
+if __name__ == "__main__":
+    main()
